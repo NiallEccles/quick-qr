@@ -1,0 +1,15 @@
+.variant-orange {
+    box-shadow: rgb(211 148 52) 0px -6px 0px inset, rgb(236 253 245) 0px -7px 0px 0px inset, rgb(236 253 245) 0px 1px 0px 1px inset;
+}
+
+.variant-green {
+    box-shadow: rgb(52 211 153) 0px -6px 0px inset, rgb(236 253 245) 0px -7px 0px 0px inset, rgb(236 253 245) 0px 1px 0px 1px inset;
+}
+
+.variant-blue {
+    box-shadow: rgb(147, 197, 253) 0px -6px 0px inset, rgb(239, 246, 255) 0px -7px 0px 0px inset, rgb(239, 246, 255) 0px 1px 0px 1px inset;
+}
+
+.variant-blue:focus {
+    box-shadow: rgb(147, 197, 253) 0px -6px 0px inset, rgb(239, 246, 255) 0px -7px 0px 0px inset, rgb(239, 246, 255) 0px 1px 0px 1px inset;
+}
