@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import QrIcon from "./QrIcon";
+import QrIcon from "./Icons/QrIcon";
 
 const Nav: NextPage = () => {
   return (
