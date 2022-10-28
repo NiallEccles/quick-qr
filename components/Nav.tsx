@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
+import TertiaryButton from "./Buttons/TertiaryButton";
 import QrIcon from "./Icons/QrIcon";
 
 const Nav: NextPage = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 mb-5">
       {/* <div className="flex-none">
         <button className="btn btn-square btn-ghost">
           <svg
@@ -24,8 +25,11 @@ const Nav: NextPage = () => {
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl"><QrIcon/><span className="ml-2">Quick QR</span></a>
       </div>
-      <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
+      <div className="flex align-center">
+        <div>
+          <TertiaryButton>Create QR</TertiaryButton>
+        </div>
+        <button className="btn btn-square btn-ghost ml-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
