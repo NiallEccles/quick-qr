@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 
 type Data = {
   url: string,
+  name: string,
   id: string
 }
 
@@ -15,6 +16,8 @@ export default function handler(
     res.status(405);
     return;
   } else {
-    res.status(200).json({ url: req.body.url, id: nanoid(13)})
+    // console.log(JSON.stringify(req.body, null, 2));
+    const {url, name} = JSON.parse(req.body);
+    res.status(200).json({ url, name, id: nanoid(13)})
   }
 }
