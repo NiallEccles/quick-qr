@@ -1,3 +1,7 @@
+.variant-amber {
+    box-shadow: rgb(245 158 11) 0px -6px 0px inset, rgb(236 253 245) 0px -7px 0px 0px inset, rgb(236 253 245) 0px 1px 0px 1px inset;
+}
+
 .variant-orange {
     box-shadow: rgb(211 148 52) 0px -6px 0px inset, rgb(236 253 245) 0px -7px 0px 0px inset, rgb(236 253 245) 0px 1px 0px 1px inset;
 }
