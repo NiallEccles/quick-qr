@@ -2,28 +2,32 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import TertiaryButton from "../components/Buttons/TertiaryButton";
-import styles from "../styles/Home.module.css";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Create: NextPage = () => {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const supabase = useSupabaseClient();
 
   const createQr = async (name: string, url: string) => {
     setDisabled(true);
-    const request = fetch("/api/generate", {
-      method: "POST",
-      body: JSON.stringify({ name, url }),
-    });
 
-    setTimeout(()=>{
-        request.then((res) => {
-            res.json().then((data) => {
-              console.log(data);
-              setDisabled(false);
-            });
-          });
-    }, 5000)
+    await supabase.auth.getSession().then(async (session)=>{
+      const token = session.data.session?.access_token ? session.data.session?.access_token : null
+      
+      const request = await fetch("/api/generate", {
+        method: "POST",
+        body: JSON.stringify({ name, url, token }),
+      });
+  
+      setTimeout(() => {
+        request.json().then((data) => {
+          console.log(data);
+          setDisabled(false);
+        });
+      }, 100);
+    });
   };
 
   return (
@@ -66,7 +70,10 @@ const Create: NextPage = () => {
         />
       </div>
       <div className="mt-5 flex justify-end">
-        <div onClick={() => (disabled ? null : createQr(name, url))}>
+        <div
+          onClick={() => (disabled ? null : createQr(name, url))}
+          style={{ filter: disabled ? "grayscale(100%)" : "none" }}
+        >
           <TertiaryButton>Create QR</TertiaryButton>
         </div>
       </div>
