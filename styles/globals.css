@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
+/* main {
   padding: 0 2rem;
   max-width: 1200px;
   margin: auto;
-}
+} */
 
 html,
 body {
