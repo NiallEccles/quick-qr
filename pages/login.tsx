@@ -28,12 +28,12 @@ const Login: NextPage = () => {
         {!submitted ? (
           <>
             <div className="flex flex-col">
-              <label htmlFor="name">
-                <h2 className="text-xl font-medium">Name</h2>
+              <label htmlFor="email">
+                <h2 className="text-xl font-medium">Email</h2>
               </label>
               <input
-                name="name"
-                id="url"
+                name="email"
+                id="email"
                 type="text"
                 onChange={(e) => setEmail(e.currentTarget.value)}
                 className="mt-2 border-slate-600 border-2 border-b-3 p-2 pb-3 rounded-lg shadow-sm text-slate-600 font-bold bg-slate-200 hover:bg-slate-100 focus:outline-offset-2 focus:outline-slate-600"
@@ -45,12 +45,12 @@ const Login: NextPage = () => {
             </div>
             <div className="mt-5 flex justify-end">
               <div onClick={() => signIn(email)}>
-                <TertiaryButton>Sign In</TertiaryButton>
+                <TertiaryButton>Login</TertiaryButton>
               </div>
             </div>
           </>
         ) : (
-          "check email"
+          <h2 className="text-xl mb-1 text-slate-600 text-center font-bold">Check your email!</h2>
         )}
         {/* {!session ? (
           <Auth
