@@ -5,7 +5,7 @@ import TertiaryButton from "../components/Buttons/TertiaryButton";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 
-const Create: NextPage = () => {
+const Scan: NextPage = () => {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -15,31 +15,19 @@ const Create: NextPage = () => {
   const createQr = async (name: string, url: string) => {
     setDisabled(true);
 
-    await supabase.auth.getSession().then(async (retrievedSession) => {
-      // const token = session.data.session?.access_token
-      //   ? session.data.session?.access_token
-      //   : null;
-        
-      // const id = session.data.session?.user.id
-      //   ? session.data.session?.user.id
-      //   : null;
-
-      const session = retrievedSession.data.session;
-
-      console.log(session);
-      
+    await supabase.auth.getSession().then(async (session) => {
+      const token = session.data.session?.access_token
+        ? session.data.session?.access_token
+        : null;
 
       const request = await fetch("/api/generate", {
         method: "POST",
-        body: JSON.stringify({ name, url, session }),
+        body: JSON.stringify({ name, url, token }),
       });
 
       setTimeout(() => {
         request.json().then((data) => {
           console.log(data);
-          if(data.status === "success") {
-            router.push('/codes');
-          }
           setDisabled(false);
         });
       }, 100);
@@ -106,4 +94,4 @@ const Create: NextPage = () => {
   );
 };
 
-export default Create;
+export default Scan;

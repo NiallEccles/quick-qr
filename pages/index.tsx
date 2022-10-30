@@ -1,10 +1,24 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
 import BoltIcon from "../components/Icons/BoltIcon";
 import ChartIcon from "../components/Icons/ChartIcon";
 import PaintBrushIcon from "../components/Icons/PaintBrushIcon";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const supabase = useSupabaseClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    supabase.auth.getSession().then((retrievedSession) => {
+      console.log(retrievedSession);
+      if (retrievedSession.data.session) {
+        router.push("/codes");
+      }
+    });
+  }, [null]);
   return (
     <div>
       <Head>
