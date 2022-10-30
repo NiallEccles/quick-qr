@@ -33,10 +33,8 @@ export default async function handler(
     await supabase.auth
       .getUser(session.access_token)
       .then(async (retrievedUser) => {
-        console.log(retrievedUser);
         if (retrievedUser.data.user) {
           const settedSession = supabase.auth.setSession(session);
-          settedSession.then((sesh) => console.log(sesh));
 
           const { data, error } = await supabase
             .from("codes")

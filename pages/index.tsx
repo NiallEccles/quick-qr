@@ -13,7 +13,6 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then((retrievedSession) => {
-      console.log(retrievedSession);
       if (retrievedSession.data.session) {
         router.push("/codes");
       }

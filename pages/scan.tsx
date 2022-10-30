@@ -27,7 +27,6 @@ const Scan: NextPage = () => {
 
       setTimeout(() => {
         request.json().then((data) => {
-          console.log(data);
           setDisabled(false);
         });
       }, 100);
@@ -36,7 +35,6 @@ const Scan: NextPage = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then((retrievedSession) => {
-      console.log(retrievedSession);
       if (!retrievedSession.data.session) {
         router.push("/");
       }

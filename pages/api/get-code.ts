@@ -41,7 +41,6 @@ export default async function handler(
       .eq("short_code", code)
       .then(async (data) => {
         const d = data.data as Code[];
-        console.log(data);
         await supabase
           .from("codes")
           .update({ num_scans: d[0].num_scans + 1 })

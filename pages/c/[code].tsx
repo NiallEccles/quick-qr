@@ -8,8 +8,6 @@ const Code: NextPage = () => {
   const router = useRouter();
   const { code } = router.query;
 
-  //   useEffect(() => {
-  console.log(code);
   if (code) {
     const request = fetch("/api/get-code", {
       method: "POST",
@@ -18,7 +16,6 @@ const Code: NextPage = () => {
 
     request.then((req) => {
         req.json().then(res => {
-            console.log(res);
             if(typeof window !== undefined){
                 window.location.href = res.url;
             }

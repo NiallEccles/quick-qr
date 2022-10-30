@@ -32,11 +32,9 @@ export default async function handler(
     );
     
     await supabase.auth.getUser(session.access_token).then(async(retrievedUser) => {
-      console.log(retrievedUser);
       if (retrievedUser.data.user) {
 
         const settedSession = supabase.auth.setSession(session);
-        settedSession.then((sesh) => console.log(sesh));
 
         const short_code = nanoid(13);
         const { error } = await supabase

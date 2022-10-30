@@ -26,9 +26,6 @@ const Create: NextPage = () => {
 
       const session = retrievedSession.data.session;
 
-      console.log(session);
-      
-
       const request = await fetch("/api/generate", {
         method: "POST",
         body: JSON.stringify({ name, url, session }),
@@ -36,7 +33,6 @@ const Create: NextPage = () => {
 
       setTimeout(() => {
         request.json().then((data) => {
-          console.log(data);
           if(data.status === "success") {
             router.push('/codes');
           }
@@ -48,7 +44,6 @@ const Create: NextPage = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then((retrievedSession) => {
-      console.log(retrievedSession);
       if (!retrievedSession.data.session) {
         router.push("/");
       }

@@ -27,7 +27,6 @@ const Edit: NextPage = () => {
 
       request.json().then((data) => {
         if (data.status === "success") {
-          console.log(data);
           data.row.map((row: any) => {
             if(row.short_code === code) {
               setName(data.row[0].name);
@@ -37,7 +36,6 @@ const Edit: NextPage = () => {
         } else {
           router.push("/codes");
         }
-        console.log(data);
         setDisabled(false);
       });
     });
@@ -57,9 +55,7 @@ const Edit: NextPage = () => {
           router.push("/codes");
           return;
         } else {
-          console.log(data.status);
         }
-        console.log(data);
         setDisabled(false);
       });
     });

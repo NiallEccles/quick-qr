@@ -41,8 +41,6 @@ export default async function handler(
             .select("*")
             .eq("user", retrievedUser.data.user.id);
 
-          console.log(data);
-
           res.status(200);
           res.json({ data, status: "success", user: retrievedUser.data.user });
         } else {
