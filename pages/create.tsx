@@ -1,26 +1,30 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TertiaryButton from "../components/Buttons/TertiaryButton";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 const Create: NextPage = () => {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [disabled, setDisabled] = useState(false);
   const supabase = useSupabaseClient();
+  const router = useRouter();
 
   const createQr = async (name: string, url: string) => {
     setDisabled(true);
 
-    await supabase.auth.getSession().then(async (session)=>{
-      const token = session.data.session?.access_token ? session.data.session?.access_token : null
-      
+    await supabase.auth.getSession().then(async (session) => {
+      const token = session.data.session?.access_token
+        ? session.data.session?.access_token
+        : null;
+
       const request = await fetch("/api/generate", {
         method: "POST",
         body: JSON.stringify({ name, url, token }),
       });
-  
+
       setTimeout(() => {
         request.json().then((data) => {
           console.log(data);
@@ -29,6 +33,15 @@ const Create: NextPage = () => {
       }, 100);
     });
   };
+
+  useEffect(() => {
+    supabase.auth.getSession().then((retrievedSession) => {
+      console.log(retrievedSession);
+      if (!retrievedSession.data.session) {
+        router.push("/");
+      }
+    });
+  }, [null]);
 
   return (
     <div className="flex flex-col bg-slate-50 p-5 rounded-lg max-w-sm mx-auto">
