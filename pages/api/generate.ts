@@ -13,7 +13,7 @@ type Data = {
   url?: string;
   id?: string;
   status: string;
-  user: any;
+  user?: any;
 };
 
 export default async function handler(
@@ -26,13 +26,14 @@ export default async function handler(
   } else {
     const { name, url, token } = JSON.parse(req.body);
 
-    await supabase.auth.getUser(token).then((user) => {
-      console.log(user);
-      if (user) {
+    await supabase.auth.getUser(token).then((retrievedUser) => {
+      console.log(retrievedUser);
+      if (retrievedUser.data.user) {
         res.status(200);
-        res.json({ url, name, id: nanoid(13), status: "success", user });
+        res.json({ url, name, id: nanoid(13), status: "success", user: retrievedUser.data.user });
       } else {
-        res.status(200);
+        res.status(400);
+        res.json({status: 'error'});
       }
     });
   }
