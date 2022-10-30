@@ -16,10 +16,10 @@ const Nav: NextPage = () => {
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if(!error){
-      router.push('/');
+    if (!error) {
+      router.push("/");
     }
-  }
+  };
 
   return (
     <div className="navbar bg-base-100 mb-5">
@@ -49,11 +49,6 @@ const Nav: NextPage = () => {
         </Link>
       </div>
       <div className="flex align-center">
-        <Link href="/create">
-          <a>
-            <TertiaryButton>Create QR</TertiaryButton>
-          </a>
-        </Link>
         {!session ? (
           <Link href="/login">
             <a>
@@ -61,11 +56,18 @@ const Nav: NextPage = () => {
             </a>
           </Link>
         ) : (
-          <a onClick={()=>signOut()}>
-            <QuaternaryButton>Logout</QuaternaryButton>
-          </a>
+          <>
+            <Link href="/create">
+              <a>
+                <TertiaryButton>Create QR</TertiaryButton>
+              </a>
+            </Link>
+            <a onClick={() => signOut()}>
+              <QuaternaryButton>Logout</QuaternaryButton>
+            </a>
+          </>
         )}
-        <button className="btn btn-square btn-ghost ml-3">
+        {/* <button className="btn btn-square btn-ghost ml-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -79,7 +81,7 @@ const Nav: NextPage = () => {
               d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
             ></path>
           </svg>
-        </button>
+        </button> */}
       </div>
     </div>
   );
