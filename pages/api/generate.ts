@@ -3,15 +3,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { nanoid } from "nanoid";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 type Data = {
   name?: string;
   url?: string;
-  id?: string;
+  short_code?: string;
   status: string;
   user?: any;
 };
@@ -24,13 +19,32 @@ export default async function handler(
     res.status(405);
     return;
   } else {
-    const { name, url, token } = JSON.parse(req.body);
+    const { name, url, session } = JSON.parse(req.body);
 
-    await supabase.auth.getUser(token).then((retrievedUser) => {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        global: {
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        }
+      }
+    );
+    
+    await supabase.auth.getUser(session.access_token).then(async(retrievedUser) => {
       console.log(retrievedUser);
       if (retrievedUser.data.user) {
+
+        const settedSession = supabase.auth.setSession(session);
+        settedSession.then((sesh) => console.log(sesh));
+
+        const short_code = nanoid(13);
+        const { error } = await supabase
+          .from('codes')
+          .insert({ short_code, name, url, user: retrievedUser.data.user.id });
+
         res.status(200);
-        res.json({ url, name, id: nanoid(13), status: "success", user: retrievedUser.data.user });
+        res.json({ url, name, short_code: short_code, status: "success", user: retrievedUser.data.user });
       } else {
         res.status(400);
         res.json({status: 'error'});
